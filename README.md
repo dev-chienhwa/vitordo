@@ -1,4 +1,4 @@
-Here is a [Next.js](https://nextjs.org) project which named "Vitordo". 
+Here is a [Next.js](https://nextjs.org) project which named "**Vitordo**". 
 
 ## The vita-ordo concept
 
