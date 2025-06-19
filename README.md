@@ -1,5 +1,27 @@
-Here is a [Next.js](https://nextjs.org) project which named "**Vitordo**". 
+# Vitordo Resume Rewriter
 
-## The vita-ordo concept
+Vitordo is a simple web application that rewrites your resume for a target job using OpenAI GPT models. Paste your current resume, specify the desired role and get a refined version that highlights achievements in a professional tone.
 
-“Vitordo” appears to have Latin roots, derived from Vita (meaning “life”) and a modified form of ordo (meaning “order” or “arrangement”). This suggests a concept of “life in order” or “structured life,” which aligns well with this project’s goal of promoting a more scheduled lifestyle.
+## Getting Started
+
+1. **Install dependencies**
+   ```bash
+   npm install
+   ```
+2. **Set your OpenAI API key**
+   ```bash
+   export OPENAI_API_KEY=your-key
+   ```
+3. **Run the dev server**
+   ```bash
+   npm run dev
+   ```
+   Open `http://localhost:3000` in your browser.
+
+## Deploying
+
+This project works out-of-the-box on Vercel. Set the `OPENAI_API_KEY` environment variable in your project settings and deploy.
+
+## License
+
+MIT
