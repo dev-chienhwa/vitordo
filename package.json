@@ -10,9 +10,9 @@
   },
   "dependencies": {
     "next": "^15.3.1",
+    "openai": "^4.104.0",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "openai": "^4"
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
