@@ -79,7 +79,7 @@ export function LeftPanel({
               Describe your tasks in natural language
             </p>
             <p className="text-xs text-gray-500">
-              I'll break them down and schedule them for you
+              I&apos;ll break them down and schedule them for you
             </p>
           </div>
         </div>

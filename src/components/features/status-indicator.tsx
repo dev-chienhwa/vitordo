@@ -3,18 +3,21 @@
 import React from 'react';
 import { cn } from '@/utils/cn';
 import { useOnlineStatus } from '@/hooks/useOnlineStatus';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { Wifi, WifiOff, Zap, AlertCircle } from 'lucide-react';
 
 export interface StatusIndicatorProps {
   llmStatus?: 'connected' | 'disconnected' | 'error';
   className?: string;
   showText?: boolean;
+  showThemeToggle?: boolean;
 }
 
 export function StatusIndicator({
   llmStatus = 'connected',
   className,
   showText = false,
+  showThemeToggle = true,
 }: StatusIndicatorProps) {
   const isOnline = useOnlineStatus();
 
@@ -62,7 +65,7 @@ export function StatusIndicator({
   const Icon = status.icon;
 
   return (
-    <div className={cn('flex items-center space-x-2', className)}>
+    <div className={cn('flex items-center space-x-3', className)}>
       <div className={cn(
         'flex items-center justify-center w-8 h-8 rounded-full',
         status.bgColor
@@ -79,6 +82,10 @@ export function StatusIndicator({
             {status.description}
           </span>
         </div>
+      )}
+
+      {showThemeToggle && (
+        <ThemeToggle size="sm" />
       )}
     </div>
   );

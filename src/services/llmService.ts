@@ -1,7 +1,8 @@
 import { LLMProvider } from './llm/providers/base';
 import { OpenAIProvider } from './llm/providers/openai';
 import { AnthropicProvider } from './llm/providers/anthropic';
-import { LLMRequest, LLMResponse, LLMProvider as LLMProviderType } from '@/types/api';
+import { DeepSeekProvider } from './llm/providers/deepseek';
+import { LLMRequest, LLMResponse, LLMProviderType } from '@/types/api';
 import { Task, TimelineStatus } from '@/types/task';
 import { ErrorHandler } from '@/utils/error-handler';
 import { storageService } from './storageService';
@@ -47,22 +48,40 @@ export class LLMService {
     }
   }
 
-  private createProvider(providerConfig: LLMProviderType): LLMProvider {
-    switch (providerConfig.name) {
+  private createProvider(providerType: LLMProviderType): LLMProvider {
+    const apiKey = this.getApiKeyForProvider(providerType);
+    
+    switch (providerType) {
       case 'openai':
-        return new OpenAIProvider({
-          apiKey: providerConfig.apiKey,
-          model: providerConfig.model,
-          baseURL: providerConfig.baseURL,
-        });
+        return new OpenAIProvider(apiKey);
       case 'anthropic':
-        return new AnthropicProvider({
-          apiKey: providerConfig.apiKey,
-          model: providerConfig.model,
-          baseURL: providerConfig.baseURL,
+        return new AnthropicProvider(apiKey);
+      case 'deepseek':
+        return new DeepSeekProvider(apiKey, {
+          baseURL: 'https://api.deepseek.com/v1',
+          model: 'deepseek-reasoner'
         });
       default:
-        throw new Error(`Unsupported LLM provider: ${providerConfig.name}`);
+        throw new Error(`Unsupported LLM provider: ${providerType}`);
+    }
+  }
+
+  private getApiKeyForProvider(providerType: LLMProviderType): string {
+    switch (providerType) {
+      case 'openai':
+        const openaiKey = process.env.OPENAI_API_KEY;
+        if (!openaiKey) throw new Error('OPENAI_API_KEY is required');
+        return openaiKey;
+      case 'anthropic':
+        const anthropicKey = process.env.ANTHROPIC_API_KEY;
+        if (!anthropicKey) throw new Error('ANTHROPIC_API_KEY is required');
+        return anthropicKey;
+      case 'deepseek':
+        const deepseekKey = process.env.DEEPSEEK_API_KEY;
+        if (!deepseekKey) throw new Error('DEEPSEEK_API_KEY is required');
+        return deepseekKey;
+      default:
+        throw new Error(`Unknown provider: ${providerType}`);
     }
   }
 
@@ -94,8 +113,8 @@ export class LLMService {
     try {
       // Check cache first
       if (this.cacheEnabled && useCache) {
-        const cacheKey = this.generateCacheKey('parse', input, context);
-        const cached = await storageService.getCache(cacheKey);
+        const { llmCacheService } = await import('./llmCacheService');
+        const cached = await llmCacheService.getCachedResponse(input, context);
         if (cached) {
           return cached;
         }
@@ -126,8 +145,8 @@ export class LLMService {
 
       // Cache successful response
       if (response.success && this.cacheEnabled && useCache) {
-        const cacheKey = this.generateCacheKey('parse', input, context);
-        await storageService.setCache(cacheKey, response, this.cacheTTL);
+        const { llmCacheService } = await import('./llmCacheService');
+        await llmCacheService.cacheResponse(input, response, context, this.primaryProvider?.name || 'default');
       }
 
       return response;

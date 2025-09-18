@@ -10,6 +10,17 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
+    "test:integration": "jest --testPathPattern=integration",
+    "test:e2e": "playwright test",
+    "test:all": "node scripts/test-coverage.js",
+    "build:analyze": "ANALYZE=true npm run build",
+    "build:production": "node scripts/deploy/build.js",
+    "deploy": "node scripts/deploy/deploy.js",
+    "deploy:vercel": "node scripts/deploy/deploy.js vercel",
+    "deploy:docker": "node scripts/deploy/deploy.js docker",
+    "docker:build": "docker build -t vitordo:latest .",
+    "docker:run": "docker run -p 3000:3000 vitordo:latest",
+    "type-check": "tsc --noEmit",
     "prepare": "husky"
   },
   "dependencies": {

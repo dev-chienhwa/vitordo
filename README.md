@@ -1,106 +1,170 @@
-# Vitordo
+# Vitordo - AI-Powered Task Management
 
-Vitordo是一个智能任务管理和时间线可视化web应用。用户通过自然语言输入任务描述，系统利用LLM API自动进行任务拆解、时间估算和调度，并在右侧时间线中以不同颜色和状态展示任务进度。
+Vitordo is an intelligent task management application that transforms natural language input into organized, scheduled tasks using AI-powered assistance.
 
-## 功能特性
+## Features
 
-- 🤖 **智能任务解析**: 使用LLM API自动拆解和调度任务
-- 📅 **可视化时间线**: 直观的任务进度和状态显示
-- 🎨 **现代化界面**: 基于Tailwind CSS的响应式设计
-- ⚡ **实时更新**: 任务状态实时同步和动画效果
-- 💾 **数据持久化**: 本地存储确保数据不丢失
+- **Natural Language Processing**: Describe tasks in plain English
+- **Smart Scheduling**: AI-powered task scheduling and conflict detection
+- **Multiple AI Providers**: OpenAI, Anthropic, and DeepSeek Reasoner support
+- **Three-State Timeline**: Visual task status management (Upcoming, Recently Completed, Completed)
+- **Offline Support**: Works offline with automatic sync
+- **Responsive Design**: Works on desktop and mobile devices
+- **Dark/Light Theme**: Customizable appearance
+- **Performance Optimized**: Virtual scrolling, caching, and lazy loading
 
-## 技术栈
+## Getting Started
 
-- **框架**: Next.js 14 (App Router)
-- **语言**: TypeScript
-- **样式**: Tailwind CSS + Framer Motion
-- **状态管理**: Zustand
-- **数据存储**: IndexedDB (Dexie.js)
-- **LLM集成**: OpenAI API / Anthropic Claude API
+### Prerequisites
 
-## 开始使用
+- Node.js 18+ 
+- npm or yarn
 
-### 环境要求
+### Installation
 
-- Node.js 18.17 或更高版本
-- npm 或 yarn
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd vitordo
+```
 
-### 安装依赖
-
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-### 环境配置
-
-1. 复制环境变量模板：
+3. Set up environment variables:
 ```bash
 cp .env.example .env.local
 ```
 
-2. 在 `.env.local` 中配置你的API密钥：
-```env
-OPENAI_API_KEY=your_openai_api_key_here
-ANTHROPIC_API_KEY=your_anthropic_api_key_here
-```
-
-### 启动开发服务器
-
+4. Run the development server:
 ```bash
 npm run dev
 ```
 
-打开 [http://localhost:3000](http://localhost:3000) 查看应用。
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## 项目结构
+## Project Structure
 
 ```
-src/
-├── app/                    # Next.js App Router
-├── components/            # React组件
-│   ├── ui/               # 基础UI组件
-│   ├── layout/           # 布局组件
-│   └── features/         # 功能组件
-├── services/             # 业务服务层
-├── stores/               # 状态管理
-├── types/                # TypeScript类型定义
-├── utils/                # 工具函数
-└── hooks/                # 自定义React Hooks
+vitordo/
+├── src/
+│   ├── app/                 # Next.js app directory
+│   ├── components/          # React components
+│   │   ├── features/        # Feature-specific components
+│   │   ├── layout/          # Layout components
+│   │   ├── providers/       # Context providers
+│   │   └── ui/              # Reusable UI components
+│   ├── hooks/               # Custom React hooks
+│   ├── services/            # Business logic and API services
+│   ├── stores/              # State management (Zustand)
+│   ├── utils/               # Utility functions
+│   └── __tests__/           # Test files
+├── docs/                    # Documentation
+├── e2e/                     # End-to-end tests
+└── public/                  # Static assets
 ```
 
-## 开发指南
+## Available Scripts
 
-### 代码规范
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run test` - Run unit tests
+- `npm run test:watch` - Run tests in watch mode
+- `npm run test:coverage` - Run tests with coverage
+- `npm run e2e` - Run end-to-end tests
+- `npm run lint` - Run ESLint
+- `npm run type-check` - Run TypeScript type checking
 
-项目使用ESLint和Prettier进行代码格式化，Husky确保提交前的代码质量。
+## Testing
 
+### Unit Tests
 ```bash
-# 代码检查
-npm run lint
-
-# 代码格式化
-npx prettier --write .
+npm run test
 ```
 
-### 构建部署
-
+### End-to-End Tests
 ```bash
-# 构建生产版本
-npm run build
-
-# 启动生产服务器
-npm start
+npm run e2e
 ```
 
-## 贡献指南
+### Coverage Report
+```bash
+npm run test:coverage
+```
 
-1. Fork 项目
-2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 打开 Pull Request
+## Documentation
 
-## 许可证
+- [User Guide](./docs/USER_GUIDE.md) - How to use Vitordo
+- [API Documentation](./docs/API.md) - Developer API reference
+- [Component Documentation](./docs/COMPONENTS.md) - Component library reference
+- [DeepSeek Integration](./docs/DEEPSEEK_INTEGRATION.md) - DeepSeek Reasoner setup and usage
 
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
+## Architecture
+
+### Core Technologies
+
+- **Next.js 14** - React framework with App Router
+- **TypeScript** - Type safety and developer experience
+- **Tailwind CSS** - Utility-first CSS framework
+- **Framer Motion** - Animation library
+- **Zustand** - State management
+- **IndexedDB** - Local data persistence
+
+### Key Services
+
+- **LLM Service** - Natural language processing (OpenAI, Anthropic, DeepSeek)
+- **Task Service** - Task CRUD operations
+- **Storage Service** - Data persistence
+- **Cache Service** - Performance optimization
+
+### State Management
+
+The application uses Zustand for state management with the following stores:
+
+- **Task Store** - Task data and operations
+- **UI Store** - UI state and notifications
+- **Settings Store** - User preferences and configuration
+
+## Performance Features
+
+- **Virtual Scrolling** - Efficient rendering of large task lists
+- **Intelligent Caching** - LLM response caching with TTL
+- **Lazy Loading** - Components loaded on demand
+- **Debounced Inputs** - Optimized user input handling
+- **Offline Support** - Local storage with sync capabilities
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
+
+### Development Guidelines
+
+- Write tests for new features
+- Follow TypeScript best practices
+- Use semantic commit messages
+- Ensure accessibility compliance
+- Maintain documentation
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+For support, please check the [User Guide](./docs/USER_GUIDE.md) or open an issue on GitHub.
+
+## Roadmap
+
+- [ ] Voice input support
+- [ ] Team collaboration features
+- [ ] Calendar integrations
+- [ ] Mobile app
+- [ ] API for third-party integrations
+- [ ] Advanced analytics and reporting

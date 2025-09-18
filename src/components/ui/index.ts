@@ -6,3 +6,4 @@ export * from './textarea';
 export * from './card';
 export * from './animated-container';
 export * from './container';
+export * from './notification-system';

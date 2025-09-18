@@ -11,10 +11,16 @@ export interface LLMRequest {
 
 export interface LLMResponse {
   tasks?: Omit<Task, 'id' | 'createdAt' | 'updatedAt'>[];
+  updatedTasks?: Array<{
+    id: string;
+    status: TimelineStatus;
+    reason?: string;
+  }>;
   statusUpdates?: TaskUpdate[];
   success: boolean;
   error?: string;
   confidence?: number;
+  reasoning?: string;
 }
 
 export interface APIResponse<T> {
@@ -33,11 +39,13 @@ export interface APIError {
 }
 
 export interface LLMProvider {
-  name: 'openai' | 'anthropic';
+  name: 'openai' | 'anthropic' | 'deepseek';
   model: string;
   apiKey: string;
   baseURL?: string;
 }
+
+export type LLMProviderType = 'openai' | 'anthropic' | 'deepseek';
 
 export interface RequestConfig {
   timeout?: number;
